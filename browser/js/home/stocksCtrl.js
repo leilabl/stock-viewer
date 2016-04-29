@@ -48,7 +48,7 @@ app.controller('stocksCtrl', function($scope, StocksFactory, $state, $timeout) {
 	$scope.deleteStock = function(stockSymbol) {
 		StocksFactory.deleteStock(stockSymbol)
 		.then(function() {
-
+			$state.reload();
 		})
 	}
 

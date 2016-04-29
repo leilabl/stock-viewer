@@ -68,13 +68,14 @@ router.post('/', function(req, res, next) {
     Stocks.create({symbol:req.body.symbol.toUpperCase(), shares:req.body.shares})
     .then(function(data) {
         // console.log('posted', data)
-        res.status(201).send(data);
+        res.sendStatus(201);
     })
     // console.log('###inside post',req.body)
 })
 
 router.delete('/:stockSymbol', function(req, res, next) {
-            console.log('in route', req.params)
-
     Stocks.destroy({ where: { symbol: req.params.stockSymbol }})
+    .then(function(data) {
+        res.sendStatus(200);
+    })
 })

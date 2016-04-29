@@ -30,7 +30,7 @@ app.factory('StocksFactory', function($http) {
 
 	StocksFactory.deleteStock = function(stockSymbol) {
 		console.log('in fac', stockSymbol)
-		return $http.delete('api/stocks/' + stockSymbol)
+		return $http.delete('api/stocks/'+ stockSymbol)
 		.then(function() {
 
 		})
