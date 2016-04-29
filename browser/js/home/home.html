@@ -1,0 +1,45 @@
+<section id="home">
+	<div id="search">
+		<form ng-submit="submitSearch()">
+			<input type="text" name="searchStock" ng-model="search">
+			<input type="submit" id="submit" value="Submit" class="btn btn-default">
+		</form>
+	</div>
+	<br/>
+	<div id="results" ng-show="searchResults">
+		<table class="table">
+			<tr>
+				<th>Name</th>
+				<th>Symbol</th>
+				<th>Last Price</th>
+				<th>Shares</th>
+				<th>Market Value</th>
+			</tr>
+			<tr>
+				<td>{{searchResults.Name}}</td>
+				<td>{{searchResults.symbol}}</td>
+				<td>{{searchResults.LastTradePriceOnly}}</td>
+				<td>x</td>
+				<td>x</td>
+			</tr>
+		</table>
+		<button class="btn btn-primary" ng-click="addToPortfolio()">Add</button>
+	</div>
+	<br/>
+	<table class="table">
+		<tr>
+			<th>Name</th>
+			<th>Symbol</th>
+			<th>Last Price</th>
+			<th>Shares</th>
+			<th>Market Value</th>
+		</tr>
+		<tr ng-repeat="stock in allStocks">
+			<td>{{stock.Name}}</td>
+			<td>{{stock.symbol}}</td>
+			<td>{{stock.LastTradePriceOnly}}</td>
+			<td>{{stock.shares}}</td>
+			<td>{{stock.LastTradePriceOnly * stock.shares | currency}}</td>
+		</tr>
+	</table>
+</section>
