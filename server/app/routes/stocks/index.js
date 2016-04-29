@@ -73,3 +73,8 @@ router.post('/', function(req, res, next) {
     // console.log('###inside post',req.body)
 })
 
+router.delete('/:stockSymbol', function(req, res, next) {
+            console.log('in route', req.params)
+
+    Stocks.destroy({ where: { symbol: req.params.stockSymbol }})
+})

@@ -28,7 +28,6 @@ app.controller('stocksCtrl', function($scope, StocksFactory, $state, $timeout) {
 			$scope.reachedMax();
 			return;
 		}
-
 		//check if unique stock -> needs to validate in the backend too, but validate in the front end to save the http call
 		for (let s of $scope.allStocks) {
 			if(s.symbol === $scope.searchResults.symbol) {
@@ -36,19 +35,25 @@ app.controller('stocksCtrl', function($scope, StocksFactory, $state, $timeout) {
 				return;
 			}
 		}
-
 		if ($scope.sharesNumber) $scope.searchResults.shares = $scope.sharesNumber;
 		else $scope.searchResults.shares = null;
-		// console.log($scope.sharesNumber)
+
 		StocksFactory.addToPortfolio($scope.searchResults)
 		.then(function(){
-			// console.log('here')
 			$scope.searchResults = null;
 			$state.reload();
 		});
 	}
 
+	$scope.deleteStock = function(stockSymbol) {
+		StocksFactory.deleteStock(stockSymbol)
+		.then(function() {
 
+		})
+	}
+
+
+	// Alerts
 	$scope.stockAlreadyIn = function() {
 		$scope.repeated = true;
 		$timeout(function() {

@@ -41,6 +41,7 @@
 			<th>Last Price</th>
 			<th>Shares</th>
 			<th>Market Value</th>
+			<th>Delete</th>
 		</tr>
 		<tr ng-repeat="stock in allStocks">
 			<td>{{stock.Name}}</td>
@@ -49,6 +50,7 @@
 			<td>{{stock.shares}}</td>
 			<td ng-show="stock.shares">{{stock.LastTradePriceOnly * stock.shares | currency}}</td>
 			<td ng-show="!stock.shares"></td>
+			<td><button class="btn btn-sm btn-danger" ng-click="deleteStock(stock.symbol)">X</button></td>
 		</tr>
 	</table>
 </section>
