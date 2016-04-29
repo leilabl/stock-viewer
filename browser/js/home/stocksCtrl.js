@@ -1,4 +1,4 @@
-app.controller('stocksCtrl', function($scope, StocksFactory) {
+app.controller('stocksCtrl', function($scope, StocksFactory, $state) {
 	// $scope.test = "hello";
 
 	$scope.search;
@@ -24,9 +24,9 @@ app.controller('stocksCtrl', function($scope, StocksFactory) {
 	$scope.addToPortfolio = function() {
 		StocksFactory.addToPortfolio($scope.searchResults)
 		.then(function(){
-			console.log()
+			console.log('here')
 			$scope.searchResults = null;
-			refreshStocks();
+			$state.reload();
 		});
 	}
 

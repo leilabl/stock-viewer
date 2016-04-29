@@ -66,6 +66,10 @@ router.get('/:stockSymbol', function(req, res, next) {
 
 router.post('/', function(req, res, next) {
     Stocks.create({symbol:req.body.symbol, shares:1})
+    .then(function(data) {
+        // console.log('posted', data)
+        res.status(201).send(data);
+    })
     // console.log('###inside post',req.body)
 })
 
