@@ -1,13 +1,9 @@
 <section id="home">
 	<div class="col-xs-8" id="search">
 		<form class="form-inline form-group" ng-submit="submitSearch()">
-			<!-- <div class="form-group"> -->
 				<label for="searchStock">Enter stock symbol: </label>
 				<input class="form-control" type="text" name="searchStock" ng-model="search">
 				<input type="submit" id="submit" value="Submit" class="btn btn-default">
-			<!-- </div>
-			<div class="form-group">
-			</div> -->
 		</form>
 	</div>
 	<br/>
@@ -28,8 +24,10 @@
 			<label for="sharesNumber">Enter number of shares (optional): </label>
 			<input class="form-control" type="number" name="sharesNumber" ng-model="sharesNumber">
 			<input type="submit" id="submit" value="Add to Portfolio" class="btn btn-default">
+
+			<div ng-show="repeated" class="alert alert-danger">You already have this stock in your portfolio!				
+			</div>
 		</form>
-		<!-- <button class="btn btn-primary" ng-click="addToPortfolio()">Add</button> -->
 	</div>
 	<br/>
 	<table class="table">
@@ -45,7 +43,8 @@
 			<td>{{stock.symbol}}</td>
 			<td>{{stock.LastTradePriceOnly}}</td>
 			<td>{{stock.shares}}</td>
-			<td>{{stock.LastTradePriceOnly * stock.shares | currency}}</td>
+			<td ng-show="stock.shares">{{stock.LastTradePriceOnly * stock.shares | currency}}</td>
+			<td ng-show="!stock.shares"></td>
 		</tr>
 	</table>
 </section>

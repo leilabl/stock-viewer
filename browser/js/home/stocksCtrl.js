@@ -1,8 +1,9 @@
-app.controller('stocksCtrl', function($scope, StocksFactory, $state) {
+app.controller('stocksCtrl', function($scope, StocksFactory, $state, $timeout) {
 	// $scope.test = "hello";
 
 	$scope.search;
 	$scope.searchResults = null;
+	$scope.repeated;
 
 	function refreshStocks() {
 		StocksFactory.getAllStocks()
@@ -22,6 +23,13 @@ app.controller('stocksCtrl', function($scope, StocksFactory, $state) {
 	}
 
 	$scope.addToPortfolio = function() {
+		//check if unique stock -> needs to validate in the backend too, but validate in the front end to save the http call
+		for (let s of $scope.allStocks) {
+			if(s.symbol === $scope.searchResults.symbol) {
+				$scope.stockAlreadyIn();
+				return;
+			}
+		}
 		if ($scope.sharesNumber) $scope.searchResults.shares = $scope.sharesNumber;
 		else $scope.searchResults.shares = null;
 		// console.log($scope.sharesNumber)
@@ -31,6 +39,14 @@ app.controller('stocksCtrl', function($scope, StocksFactory, $state) {
 			$scope.searchResults = null;
 			$state.reload();
 		});
+	}
+
+
+	$scope.stockAlreadyIn = function() {
+		$scope.repeated = true;
+		$timeout(function() {
+			$scope.repeated = false;
+		}, 1500);
 	}
 
 	refreshStocks();
