@@ -1,9 +1,10 @@
 app.controller('stocksCtrl', function($scope, StocksFactory, $state, $timeout) {
-	// $scope.test = "hello";
 
 	$scope.search;
 	$scope.searchResults = null;
 	$scope.repeated;
+	$scope.max;
+	$scope.invalid;
 
 	function refreshStocks() {
 		StocksFactory.getAllStocks()
@@ -14,15 +15,20 @@ app.controller('stocksCtrl', function($scope, StocksFactory, $state, $timeout) {
 
 
 	$scope.submitSearch = function() {
-		$scope.query = $scope.search;
-	//console.log($scope.search)
-		StocksFactory.searchStock($scope.query)
+		StocksFactory.searchStock($scope.search)
 		.then(function(stock) {
-			$scope.searchResults = stock;
+			if (!stock.Name) $scope.invalidStock();
+			else $scope.searchResults = stock;
 		})
 	}
 
 	$scope.addToPortfolio = function() {
+		//check if already 5 stocks -> needs to validate in the backend too, but validate in the front end to save the http call
+		if ($scope.allStocks.length>4) {
+			$scope.reachedMax();
+			return;
+		}
+
 		//check if unique stock -> needs to validate in the backend too, but validate in the front end to save the http call
 		for (let s of $scope.allStocks) {
 			if(s.symbol === $scope.searchResults.symbol) {
@@ -30,6 +36,7 @@ app.controller('stocksCtrl', function($scope, StocksFactory, $state, $timeout) {
 				return;
 			}
 		}
+
 		if ($scope.sharesNumber) $scope.searchResults.shares = $scope.sharesNumber;
 		else $scope.searchResults.shares = null;
 		// console.log($scope.sharesNumber)
@@ -49,7 +56,19 @@ app.controller('stocksCtrl', function($scope, StocksFactory, $state, $timeout) {
 		}, 1500);
 	}
 
-	refreshStocks();
+	$scope.reachedMax = function() {
+		$scope.max = true;
+		$timeout(function() {
+			$scope.max = false;
+		}, 1500);
+	}
 
-	// console.log($scope.allStocks)
+	$scope.invalidStock = function() {
+		$scope.invalid = true;
+		$timeout(function() {
+			$scope.invalid = false;
+		}, 1500);
+	}
+
+	refreshStocks();
 })
