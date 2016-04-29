@@ -5,6 +5,7 @@ app.controller('stocksCtrl', function($scope, StocksFactory, $state, $timeout) {
 	$scope.repeated;
 	$scope.max;
 	$scope.invalid;
+	$scope.allStocks = [];
 
 	function refreshStocks() {
 		StocksFactory.getAllStocks()
@@ -23,24 +24,31 @@ app.controller('stocksCtrl', function($scope, StocksFactory, $state, $timeout) {
 	}
 
 	$scope.addToPortfolio = function() {
-		//check if already 5 stocks -> needs to validate in the backend too, but validate in the front end to save the http call
-		if ($scope.allStocks.length>4) {
-			$scope.reachedMax();
-			return;
-		}
-		//check if unique stock -> needs to validate in the backend too, but validate in the front end to save the http call
-		for (let s of $scope.allStocks) {
-			if(s.symbol === $scope.searchResults.symbol) {
-				$scope.stockAlreadyIn();
+		if ($scope.allStocks) {
+			//check if already 5 stocks -> needs to validate in the backend too, but validate in the front end to save the http call
+			if ($scope.allStocks.length>4) {
+				$scope.reachedMax();
 				return;
 			}
+			//check if unique stock -> needs to validate in the backend too, but validate in the front end to save the http call
+			for (let s of $scope.allStocks) {
+				if(s.symbol === $scope.searchResults.symbol) {
+					$scope.stockAlreadyIn();
+					return;
+				}
+			}		
 		}
 		if ($scope.sharesNumber) $scope.searchResults.shares = $scope.sharesNumber;
 		else $scope.searchResults.shares = null;
 
-		StocksFactory.addToPortfolio($scope.searchResults)
+		// $scope.allStocks.push($scope.searchResults);
+		$scope.tempSearch = $scope.searchResults;
+		$scope.searchResults = null;
+		// $scope.$digest();
+
+		StocksFactory.addToPortfolio($scope.tempSearch)
 		.then(function(){
-			$scope.searchResults = null;
+			// $scope.searchResults = null;
 			$state.reload();
 		});
 	}

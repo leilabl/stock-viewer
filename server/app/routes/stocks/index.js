@@ -36,6 +36,7 @@ router.get('/', function(req, res, next) {
     let savedStocks;
     Stocks.findAll()
     .then(function(stocks) {
+        if(!stocks.length) return;
         savedStocks = stocks;
         stocks.forEach(function(el, idx, arr) {
             if (idx === arr.length - 1) stockSymbols += el.dataValues.symbol;        
@@ -45,6 +46,14 @@ router.get('/', function(req, res, next) {
         .then(function(response) {
             let test = JSON.parse(response);
             let parsed = test.query.results.quote;
+            let isArr = parsed instanceof Array;
+                            // console.log(parsed instanceof Array)
+
+            if (!isArr) {
+                console.log('condition', parsed)
+                parsed = [parsed];
+            } 
+            console.log('in the back',parsed)
             for (let i = 0; i <parsed.length; i++) {
                 parsed[i]['shares'] = savedStocks[i]['shares'];
             } 
