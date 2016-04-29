@@ -17,9 +17,10 @@ app.factory('StocksFactory', function($http) {
 	}
 
 	StocksFactory.addToPortfolio = function(stock) {
+		// console.log('stock facory',stock)
 		return $http.post('api/stocks/', stock)
 		.then(function(st) {
-			console.log('here', st)
+			// console.log('here', st)
 
 			// console.log(stock.data.query.results.quote)
 			// return stock.data.query.results.quote;

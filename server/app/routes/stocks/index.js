@@ -65,7 +65,7 @@ router.get('/:stockSymbol', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-    Stocks.create({symbol:req.body.symbol, shares:1})
+    Stocks.create({symbol:req.body.symbol.toUpperCase(), shares:req.body.shares})
     .then(function(data) {
         // console.log('posted', data)
         res.status(201).send(data);

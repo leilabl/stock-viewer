@@ -22,9 +22,12 @@ app.controller('stocksCtrl', function($scope, StocksFactory, $state) {
 	}
 
 	$scope.addToPortfolio = function() {
+		if ($scope.sharesNumber) $scope.searchResults.shares = $scope.sharesNumber;
+		else $scope.searchResults.shares = null;
+		// console.log($scope.sharesNumber)
 		StocksFactory.addToPortfolio($scope.searchResults)
 		.then(function(){
-			console.log('here')
+			// console.log('here')
 			$scope.searchResults = null;
 			$state.reload();
 		});
