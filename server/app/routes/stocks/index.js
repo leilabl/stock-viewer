@@ -5,8 +5,6 @@ const Promise = require('bluebird');
 const request = require('request-promise');
 const Stocks = require('../../../db/models/index').Stocks;
 module.exports = router;
-// const YQL = require('yql');
-// var query = new YQL('SELECT * FROM yahoo.finance.quote WHERE symbol = "G"')
 
 var testData = [{
             symbol: "FB",
@@ -47,7 +45,6 @@ router.get('/', function(req, res, next) {
             let test = JSON.parse(response);
             let parsed = test.query.results.quote;
             let isArr = parsed instanceof Array;
-                            // console.log(parsed instanceof Array)
 
             if (!isArr) {
                 console.log('condition', parsed)
@@ -57,7 +54,6 @@ router.get('/', function(req, res, next) {
             for (let i = 0; i <parsed.length; i++) {
                 parsed[i]['shares'] = savedStocks[i]['shares'];
             } 
-            // console.log('####testtt',parsed)
             res.send(parsed)
         })
     })
@@ -67,7 +63,6 @@ router.get('/', function(req, res, next) {
 router.get('/:stockSymbol', function(req, res, next) {
     request('http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quote%20where%20symbol%20in%20%28%22' + req.params.stockSymbol+ '%22%29&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=', function (error, response, body) {
             if (!error && response.statusCode == 200) {
-        // console.log('!!!!body', body) // Show the HTML for the Google homepage. 
         res.json(JSON.parse(body));
       }
     });
@@ -76,10 +71,8 @@ router.get('/:stockSymbol', function(req, res, next) {
 router.post('/', function(req, res, next) {
     Stocks.create({symbol:req.body.symbol.toUpperCase(), shares:req.body.shares})
     .then(function(data) {
-        // console.log('posted', data)
         res.sendStatus(201);
     })
-    // console.log('###inside post',req.body)
 })
 
 router.delete('/:stockSymbol', function(req, res, next) {

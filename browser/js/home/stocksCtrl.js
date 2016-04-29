@@ -1,4 +1,4 @@
-app.controller('stocksCtrl', function($scope, StocksFactory, $state, $timeout) {
+app.controller('stocksCtrl', function($scope, StocksFactory, $state, $timeout, $interval) {
 
 	$scope.search;
 	$scope.searchResults = null;
@@ -14,6 +14,9 @@ app.controller('stocksCtrl', function($scope, StocksFactory, $state, $timeout) {
 		});
 	}
 
+	refreshStocks();
+
+	$interval(refreshStocks, 5000);
 
 	$scope.submitSearch = function() {
 		StocksFactory.searchStock($scope.search)
@@ -41,14 +44,11 @@ app.controller('stocksCtrl', function($scope, StocksFactory, $state, $timeout) {
 		if ($scope.sharesNumber) $scope.searchResults.shares = $scope.sharesNumber;
 		else $scope.searchResults.shares = null;
 
-		// $scope.allStocks.push($scope.searchResults);
 		$scope.tempSearch = $scope.searchResults;
 		$scope.searchResults = null;
-		// $scope.$digest();
 
 		StocksFactory.addToPortfolio($scope.tempSearch)
 		.then(function(){
-			// $scope.searchResults = null;
 			$state.reload();
 		});
 	}
@@ -83,5 +83,4 @@ app.controller('stocksCtrl', function($scope, StocksFactory, $state, $timeout) {
 		}, 1500);
 	}
 
-	refreshStocks();
 })
