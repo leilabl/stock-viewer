@@ -6,11 +6,24 @@ app.controller('stocksCtrl', function($scope, StocksFactory, $state, $timeout, $
 	$scope.max;
 	$scope.invalid;
 	$scope.allStocks = [];
+	$scope.cache = [];
 
 	function refreshStocks() {
+		$scope.cache = $scope.allStocks;
 		StocksFactory.getAllStocks()
 		.then(function(stocks) {
 			$scope.allStocks = stocks.data;
+			$scope.allStocks.forEach(function(stock, idx) {
+				if (stock.LastTradePriceOnly > $scope.cache[idx].LastTradePriceOnly) {
+					stock.increase = true;
+					stock.decrease = false;
+				} else if (stock.LastTradePriceOnly < $scope.cache[idx].LastTradePriceOnly) {
+					stock.decrease = true;
+					stock.increase = false;
+				}
+			});
+			// console.log($scope.allStocks);
+			// console.log($scope.cache);
 		});
 	}
 

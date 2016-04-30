@@ -9,29 +9,32 @@
 	</div>
 	<br/>
 	<div id="results" ng-show="searchResults">
-		<table class="table">
-			<tr>
-				<th>Name</th>
-				<th>Symbol</th>
-				<th>Last Price</th>
-			</tr>
-			<tr>
-				<td>{{searchResults.Name}}</td>
-				<td>{{searchResults.symbol | uppercase}}</td>
-				<td>{{searchResults.LastTradePriceOnly}}</td>
-			</tr>
-		</table>
-		<form class="form-inline form-group" ng-submit="addToPortfolio()">
-			<label for="sharesNumber">Enter number of shares (optional): </label>
-			<input class="form-control" type="number" name="sharesNumber" ng-model="sharesNumber">
-			<input type="submit" id="submit" value="Add to Portfolio" class="btn btn-default">
+		<div class="col-sm-8">
+			<table class="table">
+				<tr>
+					<th>Name</th>
+					<th>Symbol</th>
+					<th>Last Price</th>
+				</tr>
+				<tr>
+					<td>{{searchResults.Name}}</td>
+					<td>{{searchResults.symbol | uppercase}}</td>
+					<td>{{searchResults.LastTradePriceOnly}}</td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-sm-4">
+			<form class="form-inline form-group" ng-submit="addToPortfolio()">
+				<label for="sharesNumber">Enter number of shares (optional): </label>
+				<input class="form-control" type="number" name="sharesNumber" ng-model="sharesNumber">
+				<input type="submit" id="submit" value="Add to Portfolio" class="btn btn-default">
 
-			<div ng-show="repeated" class="alert alert-danger">You already have this stock in your portfolio!				
-			</div>
-			<div ng-show="max" class="alert alert-danger">You can add up to 5 stocks. Please delete a stock and try again!				
-			</div>
-			
-		</form>
+				<div ng-show="repeated" class="alert alert-danger">You already have this stock in your portfolio!				
+				</div>
+				<div ng-show="max" class="alert alert-danger">You can add up to 5 stocks. Please delete a stock and try again!				
+				</div>
+			</form>
+		</div>
 	</div>
 	<br/>
 	<table class="table">
@@ -46,7 +49,7 @@
 		<tr ng-repeat="stock in allStocks">
 			<td>{{stock.Name}}</td>
 			<td>{{stock.symbol}}</td>
-			<td>{{stock.LastTradePriceOnly}}</td>
+			<td>{{stock.LastTradePriceOnly}}<span ng-show="stock.increase" class="glyphicon glyphicon-arrow-up"></span><span ng-show="stock.decrease" class="glyphicon glyphicon-arrow-down"></span></td>
 			<td>{{stock.shares}}</td>
 			<td ng-show="stock.shares">{{stock.LastTradePriceOnly * stock.shares | currency}}</td>
 			<td ng-show="!stock.shares"></td>
