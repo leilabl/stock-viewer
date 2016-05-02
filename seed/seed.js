@@ -5,6 +5,9 @@ var Promise = require('bluebird');
 
 var Stocks = require('../server/db/models').Stocks;
 
+var stocksObj = require('../server/db/index.js').db;
+
+
 var seedStocks = function () {
   
   var stocks = [{
@@ -28,4 +31,7 @@ var seedStocks = function () {
   }) 
 }
 
-seedStocks();
+stocksObj.sync({ force: true })
+.then(function() {
+	seedStocks();	
+});

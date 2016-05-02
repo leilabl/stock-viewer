@@ -47,10 +47,10 @@ router.get('/', function(req, res, next) {
             let isArr = parsed instanceof Array;
 
             if (!isArr) {
-                console.log('condition', parsed)
+                // console.log('condition', parsed)
                 parsed = [parsed];
             } 
-            console.log('in the back',parsed)
+            // console.log('in the back',parsed)
             for (let i = 0; i <parsed.length; i++) {
                 parsed[i]['shares'] = savedStocks[i]['shares'];
             } 
