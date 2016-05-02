@@ -1,0 +1,21 @@
+<nav class="navbar navbar-default navbar-static-top" role="navigation">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button class="navbar-toggle" ng-click="isCollapsed = !isCollapsed">
+				<span class="sr-only">Toggle navigaton</span>
+				<span class="glyphicon glyphicon-search"></span>
+			</button>
+			<a class="app-name pull-left" href="">StockViewer</a>
+		</div>
+		<div class="collapse navbar-collapse" uib-collapse="isCollapsed">
+			<form id="search-form" class="form-inline form-group pull-right" ng-submit="submitSearch()">
+				<div class="input-group">
+					<input class="form-control" type="text" name="searchStock" ng-model="search" placeholder="Enter stock symbol">
+					<div class="input-group-btn">
+						<button type="submit" id="submit" value="Submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</nav>

@@ -1,0 +1,20 @@
+<div id="results" ng-show="searchResults" class="panel panel-default">
+  <div class="panel-heading">{{searchResults.symbol | uppercase}}</div>
+  <div class="panel-body">
+	<div class="col-xs-6 search-result">
+		<p><strong>Name: </strong>{{searchResults.Name}}</p>
+		<p><strong>Last Price: </strong>{{searchResults.LastTradePriceOnly | currency}}</p>
+	</div>
+	<div class="col-xs-6 search-result">
+		<form class="form-inline form-group" ng-submit="addToPortfolio()">
+			<label for="sharesNumber">Enter number of shares (optional): </label>
+			<div id="shares-number" class="input-group">
+				<input class="form-control" type="number" min="1" name="sharesNumber" ng-model="sharesNumber">
+				<div class="input-group-btn">
+					<button type="submit" value="Submit" class="btn btn-default">Add to Portfolio</button>
+				</div>
+			</div>			
+		</form>
+	</div>
+  </div>
+</div>

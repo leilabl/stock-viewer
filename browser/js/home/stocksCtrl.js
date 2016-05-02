@@ -7,6 +7,10 @@ app.controller('stocksCtrl', function($scope, StocksFactory, $state, $timeout, $
 	$scope.invalid;
 	$scope.allStocks = [];
 	$scope.cache = [];
+	$scope.isCollapsed = true;
+
+
+	
 
 	function refreshStocks() {
 		$scope.cache = $scope.allStocks;
@@ -79,21 +83,21 @@ app.controller('stocksCtrl', function($scope, StocksFactory, $state, $timeout, $
 		$scope.repeated = true;
 		$timeout(function() {
 			$scope.repeated = false;
-		}, 1500);
+		}, 2000);
 	}
 
 	$scope.reachedMax = function() {
 		$scope.max = true;
 		$timeout(function() {
 			$scope.max = false;
-		}, 1500);
+		}, 2000);
 	}
 
 	$scope.invalidStock = function() {
 		$scope.invalid = true;
 		$timeout(function() {
 			$scope.invalid = false;
-		}, 1500);
+		}, 2000);
 	}
 
 })
