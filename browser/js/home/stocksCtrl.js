@@ -10,13 +10,17 @@ app.controller('stocksCtrl', function($scope, StocksFactory, $state, $timeout, $
 	$scope.isCollapsed = true;
 
 
-	
+	function loadStocks() {
+		return StocksFactory.getAllStocks()
+		.then(function(stocks) {
+			$scope.allStocks = stocks.data;
+		});
+	}	
 
 	function refreshStocks() {
 		$scope.cache = $scope.allStocks;
-		StocksFactory.getAllStocks()
-		.then(function(stocks) {
-			$scope.allStocks = stocks.data;
+		loadStocks()
+		.then(function() {
 			$scope.allStocks.forEach(function(stock, idx) {
 				if (stock.LastTradePriceOnly > $scope.cache[idx].LastTradePriceOnly) {
 					stock.increase = true;
@@ -25,13 +29,13 @@ app.controller('stocksCtrl', function($scope, StocksFactory, $state, $timeout, $
 					stock.decrease = true;
 					stock.increase = false;
 				}
-			});
-			// console.log($scope.allStocks);
-			// console.log($scope.cache);
+			});	
+		// console.log($scope.allStocks);
+		// console.log($scope.cache);
 		});
 	}
 
-	refreshStocks();
+	loadStocks();
 
 	$interval(refreshStocks, 5000);
 
